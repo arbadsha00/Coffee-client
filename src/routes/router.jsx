@@ -3,6 +3,7 @@ import MainLayout from "../layouts/MainLayout";
 import Error from "../components/Error";
 import Home from "../pages/Home";
 import AddCoffee from "../pages/AddCoffee";
+import Details from "../pages/Details";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,12 @@ const router = createBrowserRouter([
       {
         path: "addCoffee",
         element: <AddCoffee></AddCoffee>,
-      },
+        },
+        {
+            path: "details/:id",
+            element: <Details></Details>,
+            loader :({params})=>fetch(`http://localhost:3000/coffees/${params.id}`)
+          },
     ],
   },
 ]);

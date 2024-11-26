@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { IoMdPricetags } from "react-icons/io";
 import { PiChefHatFill } from "react-icons/pi";
 import { FaCoffee, FaEye } from "react-icons/fa";
@@ -46,9 +46,10 @@ const Home = () => {
                 </h1>
               </div>
               <div className="flex justify-between items-center p-4 ">
-                <button className="btn btn-sm text-white text-xl bg-yellow-900 border-none">
+                <Link to={`details/${coffee._id}`}><button  className="btn btn-sm text-white text-xl bg-yellow-900 border-none">
                   <FaEye />
                 </button>
+                </Link>
                 <button className="btn btn-sm text-white text-xl bg-yellow-950 border-none">
                   <MdEdit />
                 </button>
