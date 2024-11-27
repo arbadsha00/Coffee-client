@@ -4,6 +4,7 @@ import Error from "../components/Error";
 import Home from "../pages/Home";
 import AddCoffee from "../pages/AddCoffee";
 import Details from "../pages/Details";
+import Update from "../pages/Update";
 
 const router = createBrowserRouter([
   {
@@ -13,18 +14,25 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-            element: <Home></Home>,
-        loader : ()=>fetch("http://localhost:3000/coffees")
+        element: <Home></Home>,
+        loader: () => fetch("http://localhost:3000/coffees"),
       },
       {
         path: "addCoffee",
         element: <AddCoffee></AddCoffee>,
-        },
-        {
-            path: "details/:id",
-            element: <Details></Details>,
-            loader :({params})=>fetch(`http://localhost:3000/coffees/${params.id}`)
-          },
+      },
+      {
+        path: "details/:id",
+        element: <Details></Details>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/coffees/${params.id}`),
+      },
+      {
+        path: "update/:id",
+        element: <Update></Update>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/coffees/${params.id}`),
+      },
     ],
   },
 ]);

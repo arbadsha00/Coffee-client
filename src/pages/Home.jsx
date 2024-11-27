@@ -50,9 +50,10 @@ const Home = () => {
                   <FaEye />
                 </button>
                 </Link>
-                <button className="btn btn-sm text-white text-xl bg-yellow-950 border-none">
+                <Link to={`update/${coffee._id}`}><button className="btn btn-sm text-white text-xl bg-yellow-950 border-none">
                   <MdEdit />
                 </button>
+                </Link>
                 <button className="btn btn-sm text-white text-xl bg-red-700 border-none">
                   <MdDelete />
                 </button>
