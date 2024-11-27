@@ -1,13 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { IoMdPricetags } from "react-icons/io";
 import { PiChefHatFill } from "react-icons/pi";
 import { FaCoffee, FaEye } from "react-icons/fa";
 import { MdDelete, MdEdit } from "react-icons/md";
+import Swal from "sweetalert2";
 const Home = () => {
   const navigate = useNavigate();
-  const data = useLoaderData();
+  
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:3000/coffees")
+      .then(res => res.json())
+    .then(data=>setData(data))
+  },[data])
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/coffees/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount) {
+              Swal.fire({
+                title: "Deleted",
+                text: "Coffee deleted successfully",
+                icon: "success",
+                confirmButtonText: "Ok",
+              });
+            }
+          });
+      }
+    });
+  };
+
   return (
     <div className="container mx-auto w-11/12 bg-[#864b34] rounded-3xl py-16 flex flex-col items-center gap-6 mb-16">
       <h2 className="text-4xl font-bold text-white text-center ">
@@ -19,8 +56,8 @@ const Home = () => {
         }}
         className="btn bg-yellow-950 text-white border-none rounded-full font-semibold "
       >
-       <FaCoffee className="text-xl" />
-       Add Coffee
+        <FaCoffee className="text-xl" />
+        Add Coffee
       </button>
 
       <div className="border-b-4 border-yellow-950 w-full"></div>
@@ -46,15 +83,20 @@ const Home = () => {
                 </h1>
               </div>
               <div className="flex justify-between items-center p-4 ">
-                <Link to={`details/${coffee._id}`}><button  className="btn btn-sm text-white text-xl bg-yellow-900 border-none">
-                  <FaEye />
-                </button>
+                <Link to={`details/${coffee._id}`}>
+                  <button className="btn btn-sm text-white text-xl bg-yellow-900 border-none">
+                    <FaEye />
+                  </button>
                 </Link>
-                <Link to={`update/${coffee._id}`}><button className="btn btn-sm text-white text-xl bg-yellow-950 border-none">
-                  <MdEdit />
-                </button>
+                <Link to={`update/${coffee._id}`}>
+                  <button className="btn btn-sm text-white text-xl bg-yellow-950 border-none">
+                    <MdEdit />
+                  </button>
                 </Link>
-                <button className="btn btn-sm text-white text-xl bg-red-700 border-none">
+                <button
+                  onClick={() => handleDelete(coffee._id)}
+                  className="btn btn-sm text-white text-xl bg-red-700 border-none"
+                >
                   <MdDelete />
                 </button>
               </div>
